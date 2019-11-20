@@ -1,5 +1,4 @@
 from PIL import Image, ImageEnhance
-from pylab import *
 
 import random
 
