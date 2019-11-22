@@ -1,5 +1,5 @@
-这是一个不用进行数据标注，自动产生深度学习训练集（tensorflow标准数据集格式tfrecord)的脚本
-## 环境和说明
+这是一个不用进行数据标注，自动产生深度学习训练集（tensorflow标准数据集格式tfrecord)的脚本。
+## 环境说明
 - python3.6
 - tensorflow-cpu 1.2.1
 
@@ -11,17 +11,22 @@
 - timg文件夹用于存放目标物品图片，命名遵循“标签-序号"的格式，图片格式为png。形如"AD-1.png,AD-2.png..."
 - label.py 关于标签
 - gen_img_tfrecord.py 主程序
+- dataset_utils.py tensorflow中一些关于数据集处理的函数
 ## 使用说明
-1.git clone
+1.克隆项目到本地
 ```
 git clone https://github.com/SwordLight6/auto-gen-tfrecord.git
 ```
+
+
 2.运行gen_img_tfrecord.py
 
 ```
 python gen_img_tfrecord.py
 ```
-（已经提供了一些图片了，直接运行没有问题，具体的需求和配置查看函数参数的含义自行配置）
+起始已经提供了一些图片了，直接运行没有问题，具体的需求和配置查看函数参数的含义自行配置
+（直接运行的效果是使用背景图的前10张，生成20张含有目标图的图片，以及20张生成的图片对应的tfrecord，如果自行提供图片，
+还需要做如下事情：1.把你处理好的目标图（遵循命名和格式要求）放到timg文件夹下 2.把你的背景图（遵循命名和格式要求）放到bimg文件夹下）
 
 
 ## 生成图片的效果
@@ -48,6 +53,7 @@ python gen_img_tfrecord.py
 ![image](https://raw.githubusercontent.com/SwordLight6/blog-photos/master/photos/ssd/3.png)
 ![image](https://raw.githubusercontent.com/SwordLight6/blog-photos/master/photos/ssd/4.png)
 
+ 
 
 
 
