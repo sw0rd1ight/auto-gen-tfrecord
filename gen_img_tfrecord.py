@@ -8,6 +8,9 @@ import tensorflow as tf
 from dataset_utils import int64_feature, float_feature, bytes_feature
 from label import VOC_LABELS
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 def gRotImg(bimg_name, timg_name, dimg_name, d_shapes=500, tleast_shape=50, tmost_shape=400, t_num=1):
     bboxes = []
@@ -360,6 +363,7 @@ def gen_img_TFcord(bimgPath, timgPath, dimgPath, TFrecordPath, start=1, end=50, 
         cho = random.randint(0, 500)  # 主要用来确定目标的大小
         mr = bool(cho % 3 != 0)  # 确定是移动还是转动
         cn = 1  # 一张生成图片中包含的目标商品数量
+        # 随机数策略
         if cho <= 200:
             cn = 3 if cho < 50 else 2
             if mr:
@@ -396,7 +400,8 @@ def gen_img_TFcord(bimgPath, timgPath, dimgPath, TFrecordPath, start=1, end=50, 
 
         with tf.python_io.TFRecordWriter(tfR_name) as tfrecord_writer:
             tfrecord_writer.write(example.SerializeToString())
-        print("done!", i + 1)
+        logging.info("done!"+ str(i + 1))
+
 
 
 def getLabel(basename):
@@ -498,7 +503,18 @@ def TFread():
 
 
 if __name__ == '__main__':
-    gen_img_TFcord(r"./bimg",
-                   r"./timg",
-                   r"./autoGimg",
-                   r"./autoGtfrecord", 1, 10, 20)
+    import argparse
+    parser = argparse.ArgumentParser(
+        'this script is used to generate tfrecords for training SSD or YOLO which written by tensorflow')
+    parser.add_argument('-b', '--bimg', type=str, default='./bimg', help='the dir path of background imgs')
+    parser.add_argument('-t', '--timg', default='./timg', help='the dir path of target imgs')
+    parser.add_argument('--autoGimg', default='./autoGimg', help='the dir path to save newly generated imgs')
+    parser.add_argument('--autoGtfr', default='./autoGtfrecord', help=' the dir path to save newly generated tfrecords')
+    parser.add_argument('-s', '--start', default=1, type=int, help='the start index of appointed background imgs ')
+    parser.add_argument('-e', '--end', default=10, type=int, help='the end index of appointed background imgs ')
+    parser.add_argument('-c', '--count', default=20, type=int, help='the count of imgs or tfrecords will be generated ')
+    args = parser.parse_args()
+    gen_img_TFcord(args.bimg,
+                   args.timg,
+                   args.autoGimg,
+                   args.autoGtfr, args.start, args.end, args.count)

@@ -22,7 +22,7 @@ git clone https://github.com/SwordLight6/auto-gen-tfrecord.git
 2.运行gen_img_tfrecord.py
 
 ```
-python gen_img_tfrecord.py
+python gen_img_tfrecord.py -c 20 
 ```
 起始已经提供了一些图片了，直接运行没有问题，具体的需求和配置查看函数参数的含义自行配置
 （直接运行的效果是使用背景图的前10张，生成20张含有目标图的图片，以及20张生成的图片对应的tfrecord，如果自行提供图片，
